@@ -1,0 +1,66 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model TasksModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Task Form</title>
+    <!-- ✅ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ✅ Bootstrap JavaScript (for components like dropdowns, modals) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <h2>Edit a task</h2>
+    <br/>
+    <form asp-action="Edit" method="post">
+        <div>
+            <label asp-for="Id" class="form-label"></label>
+            <input asp-for="Id" type="text" class="input-group-sm" value="@Model.Id" readonly>
+        </div>
+        <br/>
+        <div>
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" type="text" class="form-control" value="@Model.Title">
+        </div>
+        <br/>
+        <div>
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control">@Model.Description</textarea>
+        </div>
+        <br/>
+        <div>
+            <label asp-for="DueDate" class="form-label"></label>
+            <input asp-for="DueDate" type="datetime-local" class="form-control" value="@Model.DueDate.ToString("yyyy-MM-ddTHH:mm")"/>
+        </div>
+        <br/>
+        <div>
+            <label asp-for="Status" class="form-label"></label>
+            <select asp-for="Status" class="form-control">
+                @foreach (string status in @ViewBag.Statuses as List<String>)
+                {
+                    @if (@ViewBag.SelectedStatus == @status)
+                    {
+                        <option value="@status" selected>@status</option>
+                    }
+                    else
+                    {
+                        <option value="@status">@status</option>
+                    }
+                }
+            </select>
+        </div>
+        <br/>
+        <input type="submit" class="btn btn-dark"/>
+    </form>
+</div>
+</body>
+</html>
